@@ -108,10 +108,12 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
             pose_keypoints = np.ones((num_keypoints, 2), dtype=np.int32) * -1
             for kpt_id in range(num_keypoints):
                 if pose_entries[n][kpt_id] != -1.0:  # keypoint was found
-                    pose_keypoints[kpt_id, 0] = int(all_keypoints[int(pose_entries[n][kpt_id]), 0])
-                    pose_keypoints[kpt_id, 1] = int(all_keypoints[int(pose_entries[n][kpt_id]), 1])
+                    pose_keypoints[kpt_id, 0] = all_keypoints[int(pose_entries[n][kpt_id]), 0]
+                    pose_keypoints[kpt_id, 1] = all_keypoints[int(pose_entries[n][kpt_id]), 1]
+                    pose_keypoints[kpt_id, 2] = all_keypoints[int(pose_entries[n][kpt_id], 2]
             pose = Pose(pose_keypoints, pose_entries[n][18])
             current_poses.append(pose)
+            print([i.keypoints for i in current_poses])
 
         if track:
             track_poses(previous_poses, current_poses, smooth=smooth)
