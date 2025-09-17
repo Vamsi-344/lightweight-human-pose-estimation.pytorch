@@ -104,6 +104,9 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
         for kpt_id in range(all_keypoints.shape[0]):
             all_keypoints[kpt_id, 0] = (all_keypoints[kpt_id, 0] * stride / upsample_ratio - pad[1]) / scale
             all_keypoints[kpt_id, 1] = (all_keypoints[kpt_id, 1] * stride / upsample_ratio - pad[0]) / scale
+        print("All Keypoints after scaling:")
+        print(all_keypoints)
+        print("-"*50)
         current_poses = []
         for n in range(len(pose_entries)):
             if len(pose_entries[n]) == 0:
