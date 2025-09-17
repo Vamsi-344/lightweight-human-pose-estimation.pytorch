@@ -140,7 +140,7 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
             pose_with_conf_keypoints_ls = []
             for row in pose_with_conf_keypoints:  # your numpy array
                 x, y, conf = row
-                if x < 0 and y < 0:
+                if x == 0 and y == 0:
                     # undetected keypoint → zero it out
                     pose_with_conf_keypoints_ls.extend([0, 0, 0])
                 else:
