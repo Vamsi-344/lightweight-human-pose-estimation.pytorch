@@ -141,6 +141,23 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
             total = np.sum(pose_with_conf_keypoints[:, 2])
             print("Total Confidence:")
             print(total)
+            # Flatten to a list [x1,y1,c1, x2,y2,c2, ...]
+            pose_keypoints_flat = pose_with_conf_keypoints.flatten().tolist()
+            
+            # Build dictionary in OpenPose JSON schema
+            pose_json = {
+                "version": 1.0,
+                "people": [{
+                    "face_keypoints": [],
+                    "pose_keypoints": pose_keypoints_flat,
+                    "hand_right_keypoints": [],
+                    "hand_left_keypoints": []
+                }]
+            }
+            
+            # Save JSON
+            with open("person_keypoints.json", "w") as f:
+                json.dump(pose_json, f)
 
         if track:
             track_poses(previous_poses, current_poses, smooth=smooth)
