@@ -92,16 +92,15 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
         orig_img = img.copy()
         heatmaps, pafs, scale, pad = infer_fast(net, img, height_size, stride, upsample_ratio, cpu)
 
-        print("Heat maps:")
-        print(heatmaps)
-        print("-"*50)
-
         total_keypoints_num = 0
         all_keypoints_by_type = []
         for kpt_idx in range(num_keypoints):  # 19th for bg
             total_keypoints_num += extract_keypoints(heatmaps[:, :, kpt_idx], all_keypoints_by_type, total_keypoints_num)
 
         pose_entries, all_keypoints = group_keypoints(all_keypoints_by_type, pafs)
+        print("All Keypoints:")
+        print(all_keypoints)
+        print("-"*50)
         for kpt_id in range(all_keypoints.shape[0]):
             all_keypoints[kpt_id, 0] = (all_keypoints[kpt_id, 0] * stride / upsample_ratio - pad[1]) / scale
             all_keypoints[kpt_id, 1] = (all_keypoints[kpt_id, 1] * stride / upsample_ratio - pad[0]) / scale
