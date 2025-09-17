@@ -135,7 +135,7 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
                     pose_with_conf_keypoints[kpt_id, 0] = all_keypoints[int(pose_entries[n][kpt_id]), 0]
                     pose_with_conf_keypoints[kpt_id, 1] = all_keypoints[int(pose_entries[n][kpt_id]), 1]
                     pose_with_conf_keypoints[kpt_id, 2] = all_keypoints[int(pose_entries[n][kpt_id]), 2]
-            print("Pose with confidence included")
+            print("Pose with confidence included list")
             pose_with_conf_keypoints[pose_with_conf_keypoints < 0] = 0
             pose_with_conf_keypoints_ls = []
             for row in pose_with_conf_keypoints:  # your numpy array
@@ -144,8 +144,8 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
                     # undetected keypoint → zero it out
                     pose_with_conf_keypoints_ls.extend([0, 0, 0])
                 else:
-                    pose_with_conf_keypoints_ls.extend([x, y, conf])
-            print(pose_with_conf_keypoints)
+                    pose_with_conf_keypoints_ls.extend([float(x), float(y), float(conf)])
+            print(pose_with_conf_keypoints_ls)
             print("-"*50)
             total = np.sum(pose_with_conf_keypoints[:, 2])
             print("Total Confidence:")
