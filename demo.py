@@ -137,6 +137,14 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
                     pose_with_conf_keypoints[kpt_id, 2] = all_keypoints[int(pose_entries[n][kpt_id]), 2]
             print("Pose with confidence included")
             pose_with_conf_keypoints[pose_with_conf_keypoints < 0] = 0
+            pose_with_conf_keypoints_ls = []
+            for row in pose_with_conf_keypoints:  # your numpy array
+                x, y, conf = row
+                if x == -1 and y == -1:
+                    # undetected keypoint → zero it out
+                    pose_with_conf_keypoints_ls.extend([0, 0, 0])
+                else:
+                    pose_with_conf_keypoints_ls.extend([x, y, conf])
             print(pose_with_conf_keypoints)
             print("-"*50)
             total = np.sum(pose_with_conf_keypoints[:, 2])
@@ -150,7 +158,7 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
                 "version": 1.0,
                 "people": [{
                     "face_keypoints": [],
-                    "pose_keypoints": pose_keypoints_flat,
+                    "pose_keypoints": pose_with_conf_keypoints_ls,
                     "hand_right_keypoints": [],
                     "hand_left_keypoints": []
                 }]
