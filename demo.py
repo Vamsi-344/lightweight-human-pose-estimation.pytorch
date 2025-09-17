@@ -135,6 +135,7 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
                     pose_with_conf_keypoints[kpt_id, 1] = all_keypoints[int(pose_entries[n][kpt_id]), 1]
                     pose_with_conf_keypoints[kpt_id, 2] = all_keypoints[int(pose_entries[n][kpt_id]), 2]
             print("Pose with confidence included")
+            pose_with_conf_keypoints[pose_with_conf_keypoints < 0] = 0
             print(pose_with_conf_keypoints)
             print("-"*50)
             total = np.sum(pose_with_conf_keypoints[:, 2])
