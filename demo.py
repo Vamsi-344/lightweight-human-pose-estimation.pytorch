@@ -121,6 +121,9 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
             print("Current Poses:")
             print([i.keypoints for i in current_poses])
             print("-"*50)
+            print("Confidence:")
+            print(pose_entries[n][18])
+            print("-"*50)
             print("Pose entries:")
             print(pose_entries)
             print("-"*50)
@@ -133,6 +136,10 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
                     pose_with_conf_keypoints[kpt_id, 2] = all_keypoints[int(pose_entries[n][kpt_id]), 2]
             print("Pose with confidence included")
             print(pose_with_conf_keypoints)
+            print("-"*50)
+            total = np.sum(pose_with_conf_keypoints[:, 2])
+            print("Total Confidence:")
+            print(total)
 
         if track:
             track_poses(previous_poses, current_poses, smooth=smooth)
