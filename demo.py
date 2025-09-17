@@ -92,6 +92,10 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
         orig_img = img.copy()
         heatmaps, pafs, scale, pad = infer_fast(net, img, height_size, stride, upsample_ratio, cpu)
 
+        print("Heat maps:")
+        print(heatmaps)
+        print("-"*50)
+
         total_keypoints_num = 0
         all_keypoints_by_type = []
         for kpt_idx in range(num_keypoints):  # 19th for bg
@@ -114,6 +118,9 @@ def run_demo(net, image_provider, height_size, cpu, track, smooth):
             current_poses.append(pose)
             print("Current Poses:")
             print([i.keypoints for i in current_poses])
+            print("-"*50)
+            print("Pose entries:")
+            print(pose_entries)
             print("-"*50)
 
             pose_with_conf_keypoints = np.ones((num_keypoints, 3), dtype=np.int32) * -1
